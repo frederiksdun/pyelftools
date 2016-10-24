@@ -127,6 +127,9 @@ class ReadElf(object):
             version = flags & E_FLAGS.EF_ARM_EABIMASK
             if version == E_FLAGS.EF_ARM_EABI_VER5:
                 description += ", Version5 EABI"
+
+            if flags & E_FLAGS.EF_ARM_ABI_FLOAT_SOFT:
+                description += ", soft-float abi"
         elif self.elffile['e_machine'] == "EM_MIPS":
             if flags & E_FLAGS.EF_MIPS_NOREORDER:
                 description += ", noreorder"
