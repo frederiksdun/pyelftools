@@ -124,10 +124,14 @@ class ReadElf(object):
             if flags & E_FLAGS.EF_ARM_HASENTRY:
                 description += ", has entry point"
 
+            version = flags & E_FLAGS.EF_ARM_EABIMASK
+            if version == E_FLAGS.EF_ARM_EABI_VER5:
+                description += ", Version5 EABI"
+
+
             if flags & E_FLAGS.EF_ARM_RELEXEC:
                 description += ', relocatable executabl'
                 flags &= ~E_FLAGS.EF_ARM_RELEXEC
-
             if eabi == E_FLAGS.EF_ARM_EABI_VER5:
                 description += ', Version5 EABI'
                 if flags:
@@ -135,6 +139,10 @@ class ReadElf(object):
             else:
                 desrciption += ', <unrecognized EABI>'
 
+            if flags & E_FLAGS.EF_ARM_ABI_FLOAT_SOFT:
+                description += ", soft-float abi"
+            elif flags & E_FLAGS.EF_ARM_ABI_FLOAT_HARD:
+                description += ", hard-float abi"
         elif self.elffile['e_machine'] == "EM_MIPS":
             if flags & E_FLAGS.EF_MIPS_NOREORDER:
                 description += ", noreorder"
