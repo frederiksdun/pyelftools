@@ -130,6 +130,8 @@ class ReadElf(object):
 
             if flags & E_FLAGS.EF_ARM_ABI_FLOAT_SOFT:
                 description += ", soft-float abi"
+            elif flags & E_FLAGS.EF_ARM_ABI_FLOAT_HARD:
+                description += ", hard-float abi"
         elif self.elffile['e_machine'] == "EM_MIPS":
             if flags & E_FLAGS.EF_MIPS_NOREORDER:
                 description += ", noreorder"
