@@ -245,6 +245,11 @@ class ReadElf(object):
         """ Display the ELF section headers
         """
         elfheader = self.elffile.header
+
+        if not self.elffile.num_sections():
+            self._emitline("There are no sections in this file.")
+            return
+
         if show_heading:
             self._emitline('There are %s section headers, starting at offset %s' % (
                 elfheader['e_shnum'], self._format_hex(elfheader['e_shoff'])))
