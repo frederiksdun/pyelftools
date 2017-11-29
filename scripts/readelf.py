@@ -294,13 +294,15 @@ class ReadElf(object):
                     section['sh_addralign']))
 
         self._emitline('Key to Flags:')
-        self._emit('  W (write), A (alloc), X (execute), M (merge), S (strings)')
+        self._emit('  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),')
+        self._emitline()
+        self._emitline('  L (link order), O (extra OS processing required), G (group), T (TLS),')
+        self._emitline('  C (compressed), x (unknown), o (OS specific), E (exclude),')
         if self.elffile['e_machine'] in ('EM_X86_64', 'EM_L10M'):
-            self._emitline(', l (large)')
+            self._emit('  l (large), ')
         else:
-            self._emitline()
-        self._emitline('  I (info), L (link order), G (group), T (TLS), E (exclude), x (unknown)')
-        self._emitline('  O (extra OS processing required) o (OS specific), p (processor specific)')
+            self._emit('   ')
+        self._emitline('p (processor specific)')
 
     def display_symbol_tables(self):
         """ Display the symbol tables contained in the file
