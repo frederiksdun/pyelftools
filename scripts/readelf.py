@@ -591,8 +591,6 @@ class ReadElf(object):
         """
         section = self._section_from_spec(section_spec)
         if section is None:
-            self._emitline("Section '%s' does not exist in the file!" % (
-                section_spec))
             return
         if section['sh_type'] == 'SHT_NOBITS':
             self._emitline("\nSection '%s' has no data to dump." % (
@@ -638,8 +636,6 @@ class ReadElf(object):
         """
         section = self._section_from_spec(section_spec)
         if section is None:
-            self._emitline("Section '%s' does not exist in the file!" % (
-                section_spec))
             return
         if section['sh_type'] == 'SHT_NOBITS':
             self._emitline("\nSection '%s' has no data to dump." % (
