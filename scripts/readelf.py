@@ -307,6 +307,8 @@ class ReadElf(object):
         """
         self._init_versioninfo()
 
+        if not self.elffile.num_sections():
+            self._emitline("Dynamic symbol information is not available for displaying symbols.")
         for section in self.elffile.iter_sections():
             if not isinstance(section, SymbolTableSection):
                 continue
