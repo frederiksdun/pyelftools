@@ -23,8 +23,8 @@ from elftools.common.py3compat import (
 from elftools.elf.elffile import ELFFile
 from elftools.elf.dynamic import DynamicSection, DynamicSegment
 from elftools.elf.enums import ENUM_D_TAG
-from elftools.elf.segments import InterpSegment, NoteSegment
-from elftools.elf.sections import SymbolTableSection
+from elftools.elf.segments import InterpSegment
+from elftools.elf.sections import SymbolTableSection, NoteSection
 from elftools.elf.gnuversions import (
     GNUVerSymSection, GNUVerDefSection,
     GNUVerNeedSection,
@@ -410,14 +410,11 @@ class ReadElf(object):
     def display_notes(self):
         """ Display the notes contained in the file
         """
-        for segment in self.elffile.iter_segments():
-            if isinstance(segment, NoteSegment):
-                for note in segment.iter_notes():
-                      self._emitline(
-                          "\nDisplaying notes found at file offset "
-                          "%s with length %s:" % (
-                              self._format_hex(note['n_offset'], fieldsize=8),
-                              self._format_hex(note['n_size'], fieldsize=8)))
+        for section in self.elffile.iter_sections():
+            if isinstance(section, NoteSection):
+                self._emitline(
+                        "\nDisplaying notes found in: %s" %  section.name)
+                for note in section.iter_notes():
                       self._emitline('  Owner                 Data size	Description')
                       self._emitline('  %s%s %s\t%s' % (
                           note['n_name'], ' ' * (20 - len(note['n_name'])),
